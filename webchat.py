@@ -1,13 +1,11 @@
+#!/usr/bin/env python
 import requests
-import ctypes
+import sys
 
 url = 'https://webchat.quakenet.org/'
 
-# Set the text color to green
-ctypes.windll.kernel32.SetConsoleTextAttribute(ctypes.windll.kernel32.GetStdHandle(-11), 10)
-
-channel = input("Enter channel name (optional): ")
-if channel:
+if len(sys.argv) > 1:
+    channel = sys.argv[1]
     url += '?channels=' + channel
 
 response = requests.get(url)
@@ -17,6 +15,3 @@ if response.status_code == 200:
     print('URL:', response.url)
 else:
     print('Failed to connect to QuakeNet web chat.')
-
-# Reset the text color to the default
-ctypes.windll.kernel32.SetConsoleTextAttribute(ctypes.windll.kernel32.GetStdHandle(-11), 7)
